@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, AsyncStorage, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import apiDark from '../../services/apiDark';
 import '../../config/reactotron';
 
 //console.tron.log("hdfd");
@@ -19,15 +18,6 @@ export default class Login extends Component {
 		error: false,
 	}
 
-	prevision = async () => {
-		try {
-			const prev = await apiDark.get('/37.8267,-122.4233');
-			return prev;
-		} catch (error) {
-			console.tron.log("ERRO AO BUSCAR DADOS DA API DARKSKY");
-		}
-	}
-
 	saveUser = async (userName, userPassword) => {
 		await AsyncStorage.setItem("@gernte:userName", userName);
 		await AsyncStorage.setItem("@gernte:userPassword", userPassword);
@@ -35,13 +25,10 @@ export default class Login extends Component {
 
 	signIn = async () => {
 		const { userName, userPassword } = this.state;
-		//Faz uma request com o axios
-		//this.prevision();
 
 		// Salva os dados do usuário no banco local
 		await this.saveUser(userName, userPassword);
 		const a = await AsyncStorage.getItem("@gernte:userName");
-		//console.tron.log(a);
 
 		// Para mostrar o loading
 		//this.setState({loading: true});
